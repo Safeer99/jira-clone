@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { z } from "zod";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { ImageIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -23,6 +24,7 @@ import { Input } from "@/components/ui/input";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { createWorkspaceSchema } from "@/features/workspaces/schemas";
 import { useCreateWorkspace } from "@/features/workspaces/api/use-create-workspace";
+import { cn } from "@/lib/utils";
 
 type Props = {
   onCancel?: () => void;
@@ -31,6 +33,7 @@ type Props = {
 export const CreateWorkspaceForm = ({ onCancel }: Props) => {
   const { mutate, isPending } = useCreateWorkspace();
 
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<z.infer<typeof createWorkspaceSchema>>({
@@ -49,9 +52,9 @@ export const CreateWorkspaceForm = ({ onCancel }: Props) => {
     mutate(
       { form: finalValues },
       {
-        onSuccess: () => {
+        onSuccess: ({ data }) => {
           form.reset();
-          //TODO: Redirect
+          router.push(`/workspaces/${data.$id}`);
         },
       }
     );
@@ -155,6 +158,7 @@ export const CreateWorkspaceForm = ({ onCancel }: Props) => {
                 variant="secondary"
                 onClick={onCancel}
                 disabled={isPending}
+                className={cn(!onCancel && "invisible")}
               >
                 Cancel
               </Button>
