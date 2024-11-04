@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function generateInviteCode(length: number = 5) {
+export function generateInviteCode(length: number = 5): string {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
@@ -15,4 +15,11 @@ export function generateInviteCode(length: number = 5) {
   }
 
   return result;
+}
+
+export function snakeCaseToTitleCase(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
