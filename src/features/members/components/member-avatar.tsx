@@ -5,14 +5,14 @@ interface Props {
   name: string;
   className?: string;
   fallbackClassName?: string;
-  isAdmin: boolean;
+  isAdmin?: boolean;
 }
 
 export const MemberAvatar = ({
   className,
   name,
   fallbackClassName,
-  isAdmin,
+  isAdmin = false,
 }: Props) => {
   return (
     <Avatar

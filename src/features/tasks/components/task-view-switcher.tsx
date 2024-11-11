@@ -21,7 +21,13 @@ import { DataTable } from "@/features/tasks/components/data-table";
 import { DataKanban } from "@/features/tasks/components/data-kanban";
 import { DataCalendar } from "@/features/tasks/components/data-calendar";
 
-export const TaskViewSwitcher = () => {
+interface TaskViewSwitcherProps {
+  hideProjectFilter?: boolean;
+}
+
+export const TaskViewSwitcher = ({
+  hideProjectFilter,
+}: TaskViewSwitcherProps) => {
   const [{ status, assigneeId, projectId, dueDate }] = useTaskFilters();
 
   const [view, setView] = useQueryState("task-view", {
@@ -49,7 +55,6 @@ export const TaskViewSwitcher = () => {
         position: number;
       }[]
     ) => {
-      console.log(tasks);
       bulkUpdate({
         json: { tasks },
       });
@@ -82,7 +87,7 @@ export const TaskViewSwitcher = () => {
           </Button>
         </div>
         <DottedSeparator className="my-4" />
-        <DataFilters />
+        <DataFilters hideProjectFilter={hideProjectFilter} />
         <DottedSeparator className="my-4" />
         {tasksLoading ? (
           <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">
