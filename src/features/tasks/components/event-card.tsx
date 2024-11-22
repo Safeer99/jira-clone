@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 import { TaskStatus } from "@/features/tasks/types";
 import { Project } from "@/features/projects/types";
-import { MemberRole } from "@/features/members/types";
+import { MemberRole, Members } from "@/features/members/types";
 
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
@@ -12,8 +12,7 @@ import { MemberAvatar } from "@/features/members/components/member-avatar";
 
 interface EventCardProps {
   title: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  assignee: any;
+  assignee: Members;
   project: Project;
   status: TaskStatus;
   id: string;

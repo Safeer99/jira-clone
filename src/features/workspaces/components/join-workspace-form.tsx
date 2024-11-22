@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DottedSeparator } from "@/components/dotted-separator";
+
+import { useInviteCode } from "@/features/workspaces/hooks/use-invite-code";
 import { useJoinWorkspace } from "@/features/workspaces/api/use-join-workspace";
 
 interface JoinWorkspaceFormProps {
@@ -19,22 +21,21 @@ interface JoinWorkspaceFormProps {
     name: string;
   };
   workspaceId: string;
-  code: string;
 }
 
 export const JoinWorkspaceForm = ({
   initialValues,
   workspaceId,
-  code,
 }: JoinWorkspaceFormProps) => {
   const router = useRouter();
+  const inviteCode = useInviteCode();
   const { mutate, isPending } = useJoinWorkspace();
 
   const onSubmit = () => {
     mutate(
       {
         param: { workspaceId },
-        json: { code },
+        json: { code: inviteCode },
       },
       {
         onSuccess: ({ data }) => {

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Fragment } from "react";
 import { ArrowLeftIcon, MoreVerticalIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 import {
   DropdownMenu,
@@ -31,7 +30,6 @@ export const MembersList = () => {
     "destructive"
   );
 
-  const router = useRouter();
   const workspaceId = useWorkspaceId();
   const { data } = useGetMembers({ workspaceId });
   const { mutate: deleteMember, isPending: isDeleting } = useDeleteMember();
@@ -48,14 +46,7 @@ export const MembersList = () => {
     const ok = await confirm();
     if (!ok) return;
 
-    deleteMember(
-      { param: { memberId } },
-      {
-        onSuccess: () => {
-          router.refresh();
-        },
-      }
-    );
+    deleteMember({ param: { memberId } });
   };
 
   return (
